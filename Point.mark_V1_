@@ -1,0 +1,75 @@
+class Station():
+    id_station=0
+    mark_id=[[1,2,3],[80,90,70]]#Author's id + Author's stats score
+    text="Article text"#Article text
+
+    def __init__(self,name_station): #Constructor class
+        self.name_station=name_station
+
+
+    def mark(self): #Calculation of article rating
+        n=len(self.mark_id[0])
+        k=[]
+        for i in range(n):
+            k.append(avtor[i].coffRe)
+        P=0
+        for i in range(0,n):
+          P+=self.mark_id[1][i]*k[i]*10
+        P=P/n
+        return P
+
+    def markPrint(self):#Output of article rating
+        return ('Article rating (based on reviews) %.2f ' % (mark())+"%")
+    
+
+
+class Avtor():
+    count_stat=3 # Number of articles by the author
+    markAv = []#assessment of the author
+    markStat=[]#article scores
+    coffRe=0.1
+
+    station = [Station(f"Article_{i}") for i in range(3)]
+    def __init__(self,name,id_avtor,coffRe=0.1):
+        self.name=name
+        self.coffRe=coffRe
+        self.id_avtor=id_avtor
+    def create(self,name_stat):#creating an article
+        self.station.append(Station(name_stat))
+        self.count_stat+=1
+        print("Article/",self.station[self.count_stat-1].name_station,"/ created")
+    def markAvtor(self):# formation of the author's assessment on the basis of new assessments
+        self.coffStat = []
+        for i in range(self.count_stat):
+            self.markStat.append(self.station[i].mark())
+        self.markAv=sum(self.markStat)/self.count_stat
+        return self.markAv
+
+
+avtor = [Avtor(f"Author_{i}",i) for i in range(20)]
+
+
+while True: #menu
+    print("1.Create an article\n2.Rate the article")
+    q=int(input("Values ​​from 1 to 2: "))
+    if(q==1):
+        print("Select an author\n")
+        for i in range(len(avtor)):
+            print("№",i+1," ",avtor[i].name,sep="")
+        a= int(input("Values ​​from 1 to {}: ".format(len(avtor))))-1
+        b=input("Title of the article")
+        avtor[a].create(b)
+    elif(q==2):
+        print("Select an author\n")
+        for i in range(len(avtor)):
+            print("№",i+1," ",avtor[i].name,sep="")
+        a= int(input("Values ​​from 1 to {}: ".format(len(avtor))))-1
+        print("Select an article\n")
+
+        for i in range(0,avtor[a].count_stat):
+            print("№",i+1,avtor[a].station[i].name_station,sep="")
+        b=int(input("Article number::"))-1
+        print("Author",avtor[a].name,"\nName",avtor[a].station[b].name_station,"\n",avtor[a].station[b].mark(),"\n",avtor[a].station[b].text)
+    else:
+        print("***Error, please enter from the suggested values***")
+        input("Press Enter to continue")
